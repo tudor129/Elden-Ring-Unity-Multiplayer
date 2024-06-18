@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class CharacterAnimatorManager : MonoBehaviour
@@ -81,5 +82,9 @@ public class CharacterAnimatorManager : MonoBehaviour
         _character._canRotate = canRotate;
         
         // TELL THE SERVER TO UPDATE THE ANIMATION STATE FOR THIS CHARACTER AND PLAY THAT ANIMATION FOR EVERYBODY ELSE PRESENT
+        _character._characterNetworkManager.NotifyServerOfAnActionAnimationServerRpc(
+            NetworkManager.Singleton.LocalClientId, 
+            targetAnimation, 
+            applyRootMotion);
     }
 }

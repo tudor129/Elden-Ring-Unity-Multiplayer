@@ -43,8 +43,11 @@ public class CharacterNetworkManager : NetworkBehaviour
     
     // A SERVER RPC IS A FUNCTION CALLED FROM THE CLIENT, TO THE SERVER (IN OUR CASE THE HOST)
     [ServerRpc]
-    public void NotifyServerOfAnActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion)
+    public void NotifyServerOfAnActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion, ServerRpcParams serverRpcParams = default)
     {
+        // Using the uLong clientID is considered a bad practice, but it is used here for simplicity
+        // Using the serverRpcParams.Receive.SenderClientId is the recommended way to get the clientID
+        var clientId = serverRpcParams.Receive.SenderClientId;
         // IF THIS CHARACTER IS THE HOST/SERVER, THEN ACTIVATE CLIENT RPC
         if (IsServer)
         {
@@ -64,7 +67,7 @@ public class CharacterNetworkManager : NetworkBehaviour
 
     void PerformActionAnimationFromServer(string animationID, bool applyRootMotion)
     {
-        _character._animator.applyRootMotion = applyRootMotion;
+        _character._applyRootMotion = applyRootMotion;
         _character._animator.CrossFade(animationID, 0.2f);
     }
     
