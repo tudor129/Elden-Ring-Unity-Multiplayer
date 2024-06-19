@@ -28,7 +28,7 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Player Action Input")]
     [SerializeField] bool _dodgeInput = false;
-    [SerializeField] 
+    [SerializeField] bool _sprintInput = false;
     
     
    
@@ -46,6 +46,8 @@ public class PlayerInputManager : MonoBehaviour
             // IF THERE IS ALREADY AN INSTANCE OF THIS OBJECT, DESTROY THIS ONE
             Destroy(gameObject);
         }
+
+        Cursor.lockState = CursorLockMode.Confined;
     }
     void Start()
     {
@@ -78,6 +80,12 @@ public class PlayerInputManager : MonoBehaviour
             _playerControls.PlayerMovement.Movement.performed += ctx => _movementInput = ctx.ReadValue<Vector2>();
             _playerControls.PlayerCamera.Movement.performed += ctx => _cameraInput = ctx.ReadValue<Vector2>();
             _playerControls.PlayerActions.Dodge.performed += ctx => _dodgeInput = true;
+            
+            // HOLDING THE INPUT, SETS THE BOOL TO TRUE
+            _playerControls.PlayerActions.Sprint.performed += ctx => _sprintInput = true;
+            // RELEASING THE INPUT, SETS THE BOOL TO FALSE
+            _playerControls.PlayerActions.Sprint.canceled += ctx => _sprintInput = false;
+            
         }
         _playerControls.Enable();
     }
@@ -111,6 +119,7 @@ public class PlayerInputManager : MonoBehaviour
         HandlePlayerMovementInput();
         HandleCameraMovementInput();
         HandleDodgeInput();
+        HandleSprinting();
     }
     
     // MOVEMENT
@@ -141,7 +150,7 @@ public class PlayerInputManager : MonoBehaviour
         }
         
         // IF WE ARE NOT LOCKED ON, WE WANT TO PASS 0 FOR THE HORIZONTAL INPUT
-        _player._playerAnimatorManager.UpdateAnimatorMovementParameters(0, _moveAmount);
+        _player._playerAnimatorManager.UpdateAnimatorMovementParameters(0, _moveAmount, _player._playerNetworkManager._isSprinting.Value);
         
         // IF WE ARE LOCKED ON, WE WANT TO PASS THE HORIZONTAL 
         
@@ -160,6 +169,19 @@ public class PlayerInputManager : MonoBehaviour
             // FUTURE NOTE: RETURN(DO NOTHING) IF MENU OR UI WINDOW IS OPEN, DO NOTHING 
             // PERFORM A DODGE
             _player._playerLocomotionManager.AttemptToPerformDodge();
+        }
+    }
+    
+    void HandleSprinting()
+    {
+        if (_sprintInput)
+        {
+            // HANDLE SPRINTING
+            _player._playerLocomotionManager.HandleSprinting();
+        }
+        else
+        {
+            _player._playerNetworkManager._isSprinting.Value = false;
         }
     }
     

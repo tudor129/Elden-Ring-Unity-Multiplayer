@@ -8,60 +8,30 @@ public class CharacterAnimatorManager : MonoBehaviour
 {
     CharacterManager _character;
 
-    float _vertical;
-    float _horizontal;
+    int _vertical;
+    int _horizontal;
     protected virtual void Awake()
     {
         _character = GetComponent<CharacterManager>();
+        
+        _horizontal = Animator.StringToHash("Horizontal");
+        _vertical = Animator.StringToHash("Vertical");
     }
 
-    public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue)
+    public void UpdateAnimatorMovementParameters(float horizontalMovement, float verticalMovement, bool isSprinting)
     {
-        // Option 1:
-        _character._animator.SetFloat("Horizontal", horizontalValue, 0.1f, Time.deltaTime);
-        _character._animator.SetFloat("Vertical", verticalValue, 0.1f, Time.deltaTime);
-        
-        // Option 2:
-        /*float snappedHorizontal = 0;
-        float snappedVertical = 0;
-        
-        // This if chain will round the horizontal movement
+        float horizontalAmount = horizontalMovement;
+        float verticalAmount = verticalMovement;
 
-        if (horizontalValue > 0 && horizontalValue <= 0.5f)
+        if (isSprinting)
         {
-            snappedHorizontal = 0.5f;
-        }
-        else if (horizontalValue > 0.5f)
-        {
-            snappedHorizontal = 1;
-        }
-        else if (horizontalValue < 0 && horizontalValue >= -0.5f)
-        {
-            snappedHorizontal = -0.5f;
-        }
-        else if (horizontalValue < -0.5f)
-        {
-            snappedHorizontal = -1;
+            verticalAmount = 2;
         }
         
-        // This if chain will round the vertical movement
+        _character._animator.SetFloat(_horizontal, horizontalAmount, 0.1f, Time.deltaTime);
+        _character._animator.SetFloat(_vertical, verticalAmount, 0.1f, Time.deltaTime);
         
-        if (verticalValue > 0 && verticalValue <= 0.5f)
-        {
-            snappedVertical = 0.5f;
-        }
-        else if (verticalValue > 0.5f)
-        {
-            snappedVertical = 1;
-        }
-        else if (verticalValue < 0 && verticalValue >= -0.5f)
-        {
-            snappedVertical = -0.5f;
-        }
-        else if (verticalValue < -0.5f)
-        {
-            snappedVertical = -1;
-        }*/
+        
     }
 
     public virtual void PlayTargetActionAnimation(

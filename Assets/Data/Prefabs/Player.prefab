@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 6604810887625727074}
   - component: {fileID: 1973168354306739091}
   - component: {fileID: 7801329739924559003}
+  - component: {fileID: -3642610038394381728}
   - component: {fileID: -6063506401579027277}
   - component: {fileID: 8985236339482199231}
   m_Layer: 0
@@ -137,6 +138,7 @@ MonoBehaviour:
   _canMove: 1
   _playerAnimatorManager: {fileID: 0}
   _playerLocomotionManager: {fileID: 0}
+  _playerNetworkManager: {fileID: 0}
 --- !u!114 &8682420642037998053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +164,8 @@ MonoBehaviour:
     m_InternalValue: 0
   _networkMoveAmount:
     m_InternalValue: 0
+  _isSprinting:
+    m_InternalValue: 0
 --- !u!114 &6604810887625727074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +183,7 @@ MonoBehaviour:
   _moveAmount: 0
   _walkingSpeed: 2.5
   _runningSpeed: 5
+  _sprintingSpeed: 7
   _rotationSpeed: 15
 --- !u!114 &1973168354306739091
 MonoBehaviour:
@@ -202,6 +207,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10dcd3a2accb20d469acb154da8d3e37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3642610038394381728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104510707125407075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6754f37dee70924aa14abb0265ad29a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!143 &-6063506401579027277
