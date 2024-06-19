@@ -79,4 +79,14 @@ public class PlayerManager : CharacterManager
         
         
     }
+
+    public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)
+    {
+        
+    }
+    public void LoadGameDataFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
+    {
+        
+    }
+    
 }
