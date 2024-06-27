@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4807296863008290803}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.8987083, y: 7.810805, z: 11.294669}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7836814015464367326
 MonoBehaviour:
@@ -44,4 +44,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34f96489f7ed3da44a069202930f49da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _worldSeedIndex: 1
+  _player: {fileID: 0}
+  _saveGame: 0
+  _loadGame: 0
+  _worldSceneIndex: 1
+  currentCharacterSlotBeingUsed: 0
+  currentCharacterData:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  characterSlot01:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  characterSlot02:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  characterSlot03:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  characterSlot04:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  characterSlot05:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  characterSlot06:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  characterSlot07:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  characterSlot08:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  characterSlot09:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  characterSlot10:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
