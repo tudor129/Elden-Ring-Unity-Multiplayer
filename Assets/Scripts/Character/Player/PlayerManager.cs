@@ -65,6 +65,7 @@ public class PlayerManager : CharacterManager
         {
             PlayerCamera.Instance._player = this;
             PlayerInputManager.Instance._player = this;
+            WorldSaveGameManager.Instance._player = this;
 
             _playerNetworkManager._currentStamina.OnValueChanged += PlayerUIManager.Instance._playerUIHudManager.SetNewStaminaValue;
             _playerNetworkManager._currentStamina.OnValueChanged += _playerStatsManager.ResetStaminaRegenTimer;
@@ -73,11 +74,7 @@ public class PlayerManager : CharacterManager
             _playerNetworkManager._maxStamina.Value = _playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager._endurance.Value);
             _playerNetworkManager._currentStamina.Value = _playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(_playerNetworkManager._endurance.Value);
             PlayerUIManager.Instance._playerUIHudManager.SetMaxStaminaValue(_playerNetworkManager._maxStamina.Value);
-            
-            
         }
-        
-        
     }
 
     public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)

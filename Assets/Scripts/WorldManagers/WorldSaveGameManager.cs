@@ -9,7 +9,7 @@ public class WorldSaveGameManager : MonoBehaviour
 {
     public static WorldSaveGameManager Instance { get; private set; }
 
-    [SerializeField] PlayerManager _player;
+    public PlayerManager _player;
 
     [Header("SAVE/LOAD")]
     [SerializeField] bool _saveGame;
@@ -124,12 +124,39 @@ public class WorldSaveGameManager : MonoBehaviour
         return fileName;
     }
 
-    public void CreateNewGame()
+    public void AttemptToCreateNewGame()
     {
-        // CREATE A NEW FILE WITH A FILE NAME DEPENDING ON WHICH CHARACTER SLOT WE ARE USING
-        _saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(currentCharacterSlotBeingUsed);
+        _saveFileDataWriter = new SaveFileDataWriter();
+        _saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
+
+        // CHECK TO SEE IF WE CAN CREATE A NEW SAVE FILE (CHECK IF A CHARACTER ALREADY EXISTS ON THIS SLOT)
+        _saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot01);
         
-        currentCharacterData = new CharacterSaveData();
+        if (!_saveFileDataWriter.CheckToSeeIfFileExists())
+        {
+            // IF THIS PROFILE SLOT IS NOT TAKEN, MMAKE A NEW ONE USING THIS SLOT
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot01;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            return;
+        }
+        
+        // CHECK TO SEE IF WE CAN CREATE A NEW SAVE FILE (CHECK IF A CHARACTER ALREADY EXISTS ON THIS SLOT)
+        _saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot02);
+        
+        if (!_saveFileDataWriter.CheckToSeeIfFileExists())
+        {
+            // IF THIS PROFILE SLOT IS NOT TAKEN, MMAKE A NEW ONE USING THIS SLOT
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot02;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            return;
+        }
+        
+        // IF THERE ARE NO FREE SLOTS, NOTIFY THE PLAYER
+        
+        TitleScreenManager.Instance.DisplayNoFreeCharacterSlotsPopUp();
+        
     }
 
     public void LoadGame()
@@ -142,7 +169,7 @@ public class WorldSaveGameManager : MonoBehaviour
         _saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
         _saveFileDataWriter.saveFileName = _saveFileName;
         currentCharacterData = _saveFileDataWriter.LoadSaveFile();
-
+        
         StartCoroutine(LoadWorldScene());
     }
     
@@ -204,6 +231,9 @@ public class WorldSaveGameManager : MonoBehaviour
     public IEnumerator LoadWorldScene()
     {
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(_worldSceneIndex);
+        
+        _player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
+
 
         yield return null;
     }

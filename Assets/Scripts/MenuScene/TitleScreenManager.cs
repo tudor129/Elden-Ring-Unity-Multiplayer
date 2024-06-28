@@ -1,21 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TitleScreenManager : MonoBehaviour
 {
+    public static TitleScreenManager Instance;
+    
     [Header("Menus")]
     [SerializeField] GameObject _titleScreenMainMenu;
     [SerializeField] GameObject _titleScreenLoadMenu;
 
-
-
     [Header("Buttons")]
     [SerializeField] Button _loadMenuReturnButton;
+    [SerializeField] Button _mainMenuNewGameButton;
     [SerializeField] Button _mainMenuLoadGameButton;
-    
+
+    [Header("Pop Ups")]
+    [SerializeField] GameObject _noCharacterSlotsPopUp;
+    [SerializeField] Button _noCharacterSlotsOkayButton;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void StartNetowrkAsHost()
     {
         NetworkManager.Singleton.StartHost();
@@ -23,8 +42,7 @@ public class TitleScreenManager : MonoBehaviour
 
     public void StartNewGame()
     {
-        WorldSaveGameManager.Instance.CreateNewGame();
-        StartCoroutine(WorldSaveGameManager.Instance.LoadWorldScene());
+        WorldSaveGameManager.Instance.AttemptToCreateNewGame();
     }
 
     public void OpenLoadGameMenu()
@@ -47,5 +65,17 @@ public class TitleScreenManager : MonoBehaviour
         
         // SELECT THE LOAD BUTTON
         _mainMenuLoadGameButton.Select();
+    }
+
+    public void DisplayNoFreeCharacterSlotsPopUp()
+    {
+        _noCharacterSlotsPopUp.SetActive(true);
+        _noCharacterSlotsOkayButton.Select();
+    }
+
+    public void CloseNoFreeCharacterSlotsPopUp()
+    {
+        _noCharacterSlotsPopUp.SetActive(false);
+        _mainMenuNewGameButton.Select();
     }
 }
