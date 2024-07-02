@@ -23,6 +23,13 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] GameObject _noCharacterSlotsPopUp;
     [SerializeField] Button _noCharacterSlotsOkayButton;
 
+    [Header("Character Slots")]
+    public CharacterSlot currentSelectedSlot = CharacterSlot.NO_SLOT;
+    public GameObject deleteCharacterSlotPopUp;
+
+    [Header("Title Screen")]
+    [SerializeField] bool _deleteCharacterSlot;
+
     void Awake()
     {
         if (Instance == null)
@@ -77,5 +84,15 @@ public class TitleScreenManager : MonoBehaviour
     {
         _noCharacterSlotsPopUp.SetActive(false);
         _mainMenuNewGameButton.Select();
+    }
+
+    public void SelectCharacterSlot(CharacterSlot characterSlot)
+    {
+        currentSelectedSlot = characterSlot;
+    }
+
+    public void SelectNoSlot()
+    {
+        currentSelectedSlot = CharacterSlot.NO_SLOT;
     }
 }
