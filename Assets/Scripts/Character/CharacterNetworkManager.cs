@@ -27,7 +27,7 @@ public class CharacterNetworkManager : NetworkBehaviour
         NetworkVariableReadPermission.Everyone, 
         NetworkVariableWritePermission.Owner);
     
-    [FormerlySerializedAs("_animatorverticalValue")] public NetworkVariable<float> _animatorVerticalValue = new NetworkVariable<float>(
+    public NetworkVariable<float> _animatorVerticalValue = new NetworkVariable<float>(
         0,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Owner);
@@ -44,7 +44,7 @@ public class CharacterNetworkManager : NetworkBehaviour
     
     [Header("Stats")]
     public NetworkVariable<int> _endurance = new NetworkVariable<int>(
-        1,
+        10,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> _currentStamina = new NetworkVariable<float>(
